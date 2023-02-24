@@ -1,0 +1,16 @@
+#!/usr/bin/with-contenv sh
+
+#echo $'\n' >> /etc/php7/php-fpm.d/www.conf
+#echo "env[DEBUG] = ${debug}" >> /etc/php7/php-fpm.d/www.conf
+#
+#if [ ${allow_ips} ]; then
+#    echo "env[ALLOW_IPS] = ${allow_ips}" >> /etc/php7/php-fpm.d/www.conf
+#fi
+#
+#if [ ${AWS_CREDENTIALS_KEY} ]; then
+#    echo "env[AWS_CREDENTIALS_KEY] = ${AWS_CREDENTIALS_KEY}" >> /etc/php7/php-fpm.d/www.conf
+#fi
+#
+#if [ ${AWS_CREDENTIALS_SECRET} ]; then
+#    echo "env[AWS_CREDENTIALS_SECRET] = ${AWS_CREDENTIALS_SECRET}" >> /etc/php7/php-fpm.d/www.conf
+#fi

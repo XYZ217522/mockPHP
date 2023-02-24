@@ -1,0 +1,24 @@
+version: '3'
+services:
+    php:
+        container_name: mock_php
+        build:
+            context: ./
+            dockerfile: ./docker-files/Dockerfile
+        volumes:
+            - $PWD:/app/
+        privileged: true
+        tty: true
+        env_file:
+            - .env.dev
+        environment:
+            - environment=dev
+            - DB_HOST=${DB_HOST}
+            - DB_USERNAME=${DB_USERNAME}
+            - DB_PASSWORD=${DB_PASSWORD}
+            - DB_DATABASE=${DB_DATABASE}
+            - ADMIN_MAIL=${ADMIN_MAIL}
+            - MAIL_PASSWORD=${MAIL_PASSWORD}
+        ports:
+            - "8888:80"
+           # - "8877:443"
