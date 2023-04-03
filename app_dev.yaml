@@ -1,0 +1,20 @@
+runtime: php74
+
+runtime_config:
+  document_root: public
+
+env_variables:
+  APP_ENV: production
+  LOG_CHANNEL: stderr #stdout
+  APP_STORAGE: /tmp/storage
+  APP_STORAGE_PATH: /tmp
+  VIEW_COMPILED_PATH: /tmp
+  SESSION_DRIVER: cookie
+  # GOOGLE_PROJECT_ID
+  # GOOGLE_PUBSUB_TOPIC
+
+service: appengine
+
+handlers:
+  - url: /.*
+    script: public/index.php

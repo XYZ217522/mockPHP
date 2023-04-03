@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\GameRecordController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,4 +31,9 @@ Route::post('update-game-records', [GameRecordController::class, 'updateGameReco
 
 Route::post('auth/register', [UserController::class, 'register']);
 Route::post('auth/find-user', [UserController::class, 'findUser']);
+
+// post data api trigger pubsub datastore
+Route::post('/order', [OrderController::class, 'addOrder']);
+Route::post('/order/{orderNumber}', [OrderController::class, 'updateOrder']);
+
 
