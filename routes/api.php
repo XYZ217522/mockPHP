@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EncryptionController;
 use App\Http\Controllers\GameRecordController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
@@ -36,4 +37,7 @@ Route::post('auth/find-user', [UserController::class, 'findUser']);
 Route::post('/order', [OrderController::class, 'addOrder']);
 Route::post('/order/{orderNumber}', [OrderController::class, 'updateOrder']);
 
+// get encryption string by call golang
+Route::post('/getEncryptionText', [EncryptionController::class, 'encrypt']);
+Route::post('/getDecryptionText', [EncryptionController::class, 'decrypt']);
 

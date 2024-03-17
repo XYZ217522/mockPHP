@@ -1,12 +1,17 @@
+FROM golang:1.18-alpine AS builder
+
+# 設定工作目錄
+WORKDIR /build
+
+COPY ./encryption-helper-golang /build
+
+#RUN go mod download
+
+# 執行編譯
+RUN CGO_ENABLED=0 go build -v -o encryption_helper
+
 #php version is 7.4.25
 FROM alpine:3.14
-
-## Install S6-Overlay
-RUN apk update && apk upgrade && \
-    apk add --no-cache curl tzdata procps htop && \
-    cp /usr/share/zoneinfo/Asia/Taipei /etc/localtime && \
-    curl -L -s https://github.com/just-containers/s6-overlay/releases/download/v1.20.0.0/s6-overlay-amd64.tar.gz \
-    | tar xvzf - -C /
 
 RUN apk update && apk upgrade && \
     apk --no-cache --progress add \
@@ -25,21 +30,27 @@ RUN apk update && apk upgrade && \
     php7-session \
     php7-mongodb \
     php7-pdo \
-    php7-pdo_mysql
-
-
-
-RUN apk update && apk upgrade && \
-	apk --no-cache --progress add \
-	nginx \
-	php7-xmlwriter \
-	php7-xmlreader \
-	php7-simplexml \
-	php7-xml \
-	php7-zip \
-	php7-gd \
+    php7-pdo_mysql \
+    php7-xmlwriter \
+    php7-xmlreader \
+    php7-simplexml \
+    php7-xml \
+    php7-zip \
+    php7-gd \
     php7-pear \
+    curl \
+    tzdata \
+    htop \
+    nginx \
     composer
+
+WORKDIR /app
+
+# 將 Golang 階段的二進制文件複製
+RUN mkdir -p /golang
+COPY --from=builder /build/encryption_helper /golang/encryption_helper
+
+RUN chmod 755 /golang/encryption_helper
 
 RUN mkdir -p /run/nginx/ && \
 	mkdir -p /var/log/nginx
@@ -50,15 +61,18 @@ RUN php -v | head -n 1 | grep -q "PHP ${PHP_VERSION}."
 
 COPY docker-files/config /
 
-COPY docker-files/conf_php /home/httpd/conf_php/
-
 COPY . /app
 
-RUN rm -rf /app/docker-files
+RUN rm -rf /app/docker-files /app/encryption-helper-golang
 
 RUN mkdir -p /app/src/res/temp && \
 	chown nobody.nobody /app/src/res/temp
 
-WORKDIR /app
+# install s6
+ARG S6_VERSION=2.2.0.3
+RUN curl -L -s https://github.com/just-containers/s6-overlay/releases/download/v${S6_VERSION}/s6-overlay-amd64.tar.gz \
+        | tar xvzf - -C /
+
+#RUN composer install
 
 ENTRYPOINT ["/init"]

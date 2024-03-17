@@ -3,3 +3,7 @@ mkdir -p /var/log/nginx
 mkdir -p /var/log/php7
 
 #cp /var/www/html/.env.prod /var/www/html/.env
+#export ENCRYPTION_KEY=1234432156788765
+
+ENCRYPTION_KEY=1234432156788765
+echo "env[ENCRYPTION_KEY] = ${ENCRYPTION_KEY}" >> /etc/php7/php-fpm.d/www.conf

@@ -14,15 +14,6 @@ case ${environment} in
     ;;
 esac
 
-echo "DB_HOST=$DB_HOST" >> /app/.env
-echo "DB_DATABASE=$DB_DATABASE" >> /app/.env
-echo "DB_USERNAME=$DB_USERNAME" >> /app/.env
-echo "DB_PASSWORD=$DB_PASSWORD" >> /app/.env
-echo "MAIL_USERNAME=$ADMIN_MAIL" >> /app/.env
-echo "MAIL_FROM_ADDRESS=$ADMIN_MAIL" >> /app/.env
-echo "MAIL_PASSWORD=$MAIL_PASSWORD" >> /app/.env
-
-echo "GOOGLE_APPLICATION_CREDENTIALS"=$GOOGLE_APPLICATION_CREDENTIALS >> /app/.env
 # optimize base on environment
 #cd /app
 #php artisan config:cache && \
